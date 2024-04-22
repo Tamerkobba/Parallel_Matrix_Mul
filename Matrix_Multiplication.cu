@@ -15,8 +15,6 @@ __global__ void MatrixMulKernel(int *M, int *N, int *P, int Width) {
   }
 }
 
-// CUDA Kernel function to multiply the matrices is assumed to be defined elsewhere
-
 double getTime() {
   struct timeval tv;
   gettimeofday(&tv, NULL);

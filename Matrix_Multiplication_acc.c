@@ -28,10 +28,12 @@ int main() {
   int N = 1 << 10; // 1024
   size_t size = N * N * sizeof(int);
 
+  // host copies of matrices a, b & c
   int *h_a = (int *)malloc(size);
   int *h_b = (int *)malloc(size);
   int *h_c = (int *)malloc(size);
 
+  // Setup input values
   for (int i = 0; i < N * N; i++) {
     h_a[i] = rand() % 100;
     h_b[i] = rand() % 100;
@@ -42,7 +44,7 @@ int main() {
   double end = getTime();
 
   printf("Result Matrix:\n");
-
+  // Print a subset of the result matrix
   for (int i = 0; i < 10; i++) {
     for (int j = 0; j < 10; j++) {
       printf("%d ", h_c[i * N + j]);
