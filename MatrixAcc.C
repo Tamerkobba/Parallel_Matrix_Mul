@@ -1,24 +1,23 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/time.h>
-#include <openacc.h>
 
 void matrixMul(int *a, int *b, int *c, int N) {
-  #pragma acc data copyin(a[0:N*N], b[0:N*N]) copyout(c[0:N*N])
+  #pragma acc data copyin(a[0:N*N], b[0:N*N]) copy(c[0:N*N])
   {
-    #pragma acc kernels loop independent
+    #pragma acc kernels
     for (int row = 0; row < N; row++) {
-      #pragma acc loop independent
       for (int col = 0; col < N; col++) {
-        c[row * N + col] = 0;
-        #pragma acc loop seq
+        int sum = 0;
         for (int k = 0; k < N; k++) {
-          c[row * N + col] += a[row * N + k] * b[k * N + col];
+          sum += a[row * N + k] * b[k * N + col];
         }
+        c[row * N + col] = sum;
       }
     }
   }
 }
+
 double getTime() {
   struct timeval tv;
   gettimeofday(&tv, NULL);
@@ -26,7 +25,7 @@ double getTime() {
 }
 
 int main() {
-  int N = 2048;
+  int N = 1 << 10; // 1024
   size_t size = N * N * sizeof(int);
 
   // host copies of matrices a, b & c
