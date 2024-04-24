@@ -20,9 +20,9 @@ double getTime() {
 }
 
 int main() {
-  int N = 10; // Number of rows in A and C
-  int K = 20;  // Number of columns in A and rows in B
-  int M = 10;  // Number of columns in B and C
+  int N = 1000; // Number of rows in A and C
+  int K = 2000;  // Number of columns in A and rows in B
+  int M = 1000;  // Number of columns in B and C
 
   size_t sizeA = N * K * sizeof(int);
   size_t sizeB = K * M * sizeof(int);
